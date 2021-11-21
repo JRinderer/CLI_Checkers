@@ -95,6 +95,20 @@ public class Board implements Serializable {
         }
     }
 
+    public String serializeBoard() {
+        String line = "board:";
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+
+                line = line + squares[x][y].getPieceName();
+            }
+            line = line + "\n";
+        }
+        line = line + "";
+        return line;
+
+    }
 
     public ArrayList<Piece> showBoard() {
         System.out.println("======================================================");
@@ -138,6 +152,7 @@ public class Board implements Serializable {
         ArrayList<Piece> listOPieces = getPieces();
         Piece returnPiece = new RegularPiece("","");
         returnPiece = null;
+        System.out.println(player.getColor());
         for(Piece p : listOPieces){
             if(Objects.isNull(p.getFriendly_name())){
                 returnPiece = null;
