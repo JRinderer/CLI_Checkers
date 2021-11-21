@@ -56,7 +56,7 @@ public class ClientProcessing implements Runnable {
         try {
             //original String input = this.data_in.readUTF();
             this.client_message = this.data_in.readUTF();
-
+            //how do we want to process the users input?
             //split in the input
             String inputArr[] = input.split(",");
             //determine what action to take in the game.
