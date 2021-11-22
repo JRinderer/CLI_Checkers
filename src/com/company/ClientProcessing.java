@@ -90,11 +90,12 @@ public class ClientProcessing implements Runnable {
                 dataBack = game.processPlayerInput(piece_name,x_cord,y_cord,this.color,"");
                 this.data_out.writeUTF(dataBack);
             } else if(client_message_type.equals("get_turn")){
-                dataBack = game.processPlayerInput(piece_name,x_cord,y_cord,this.color,"get_turn");
+                dataBack = game.serializeGameBoard();
+                dataBack = dataBack + "," + game.processPlayerInput(piece_name,x_cord,y_cord,this.color,"get_turn");
                 this.data_out.writeUTF(dataBack);
-            //} else if(client_message_type.equals("return_board")){
-              //  dataBack= game.serializeGameBoard();
-               // this.data_out.writeUTF(dataBack);
+            } else if(client_message_type.equals("return_board")){
+                dataBack= game.serializeGameBoard();
+                this.data_out.writeUTF(dataBack);
             }
         } catch (Exception ex) {
             System.out.println("Error in Run");
