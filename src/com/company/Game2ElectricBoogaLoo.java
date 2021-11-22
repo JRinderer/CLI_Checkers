@@ -28,35 +28,33 @@ public class Game2ElectricBoogaLoo {
         return this.stringBoard = this.gameBoard.serializeBoard();
     }
 
-    public String processPlayerInput(String input){
-        int x = 0;
-        int y = 0;
+    public String processPlayerInput(String p_name, String str_x, String str_y, String str_col){
+        int x = Integer.parseInt(str_x);
+        int y = Integer.parseInt(str_y);
         boolean validMove = false;
         boolean over = false;
         String returnString = "";
-        String clientColor = "";
+        String clientColor = str_col;
         ArrayList<Player> players = new ArrayList<>();
         players.add(this.red_player);
         players.add(this.white_player);
 
         if(!this.gameOver) {
             //stores the piece a user wants to move
-            String pieceName = "";
+            String pieceName = p_name;
             Piece pieceHolder = new RegularPiece("", "");
 
-            String[] inputArray = input.split(",");
+            this.current_player = Player.get_player_turn(this.red_player,this.white_player);
 
-            pieceName = inputArray[0];
-            x = Integer.parseInt(inputArray[1]);
-            y = Integer.parseInt(inputArray[2]);
-            clientColor = inputArray[3];
             this.current_player.setColor(clientColor);
 
+            System.out.println(red_player.isTurn());
+            System.out.println(white_player.isTurn());
 
             try {
                 pieceHolder = this.gameBoard.findPiece(pieceName, this.current_player);
             } catch (Exception ex) {
-                returnString = "Error in finding piece! Piece doesn't exist or incorrect piece color selected";
+                returnString = "Error:Piece not found";
                 return returnString;
             }
 
@@ -64,15 +62,15 @@ public class Game2ElectricBoogaLoo {
             validMove = pieceHolder.Move(this.gameBoard, x, y);
 
             if (!validMove) {
-                returnString = "Invalid move! Try again";
+                returnString = "Error:Invalid Move";
             }else{
-                returnString= "move successful!";
+                returnString= "Success:Piece Moved!";
                 Player.flipTurn(players);
             }
         }else{
-            returnString = "game over!";
+            returnString = "Success:Game Over";
         }
-        returnString = returnString;
+        returnString = this.gameBoard.serializeBoard() + "," + returnString;
 
         return returnString;
 

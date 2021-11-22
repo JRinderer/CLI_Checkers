@@ -148,6 +148,10 @@ public class Board implements Serializable {
         }
     }
 
+    public Piece getPieceByCoord(int x, int y){
+        return this.squares[x][y].getPiece();
+    }
+
     public Piece findPiece(String pieceName, Player player)throws InterruptedException{
         ArrayList<Piece> listOPieces = getPieces();
         Piece returnPiece = new RegularPiece("","");

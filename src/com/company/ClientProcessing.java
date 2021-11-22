@@ -7,10 +7,17 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+/*client message will look like:
+type:color_set,color:R
+or
+type:move,piece_name:some_name,x_cord:3,y_cord:y,color:R
+
+*/
 public class ClientProcessing implements Runnable {
 
     private Socket client;
     private String client_message;
+    private String client_message_type;
     private DataInputStream data_in = null;
     private DataOutputStream data_out = null;
     //static data type to track 1 game.
@@ -51,33 +58,44 @@ public class ClientProcessing implements Runnable {
     }
 
     public void run() {
-
+        System.out.println("Dicks");
         String dataBack = "";
+        String piece_name="";
+        String x_cord = "";
+        String y_cord = "";
+
         try {
             //original String input = this.data_in.readUTF();
             this.client_message = this.data_in.readUTF();
             //how do we want to process the users input?
-            
-            String inputArr[] = input.split(",");
+            this.client_message_type = parseClientMessage("type");
+            //String inputArr[] = input.split(",");
             //determine what action to take in the game.
-            if (inputArr[0].equals("color set")) {
-                if (game.isColorAvailable(inputArr[1])) {
-                    this.color = inputArr[1];
-                    dataBack = "color:" + inputArr[1];
+            if (client_message_type.equals("color_set")) {
+                if (game.isColorAvailable(parseClientMessage("color"))) {
+                    this.color = parseClientMessage("color");
+                    dataBack = "color:" + this.color;
                     dataBack = game.serializeGameBoard() + "," + dataBack + "";
                     this.data_out.writeUTF(dataBack);
                 } else {
-                    dataBack = "The color " + inputArr[1] + " is unavailable";
+                    dataBack = "The color " + parseClientMessage("color") + " is unavailable";
                     this.data_out.writeUTF(dataBack);
                 }
-            } else {
-
-
-                dataBack = game.processPlayerInput(input);
+            } else if(client_message_type.equals("move")) {
+                this.color = parseClientMessage("color");
+                piece_name = parseClientMessage("piece_name");
+                x_cord = parseClientMessage("x_cord");
+                y_cord = parseClientMessage("y_cord");
+                dataBack = game.processPlayerInput(piece_name,x_cord,y_cord,this.color);
                 this.data_out.writeUTF(dataBack);
             }
         } catch (Exception ex) {
             System.out.println("Error in Run");
+        }
+        try {
+            this.client.close();
+        }catch (Exception ex){
+            System.out.println("error");
         }
     }
 
