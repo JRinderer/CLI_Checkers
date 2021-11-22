@@ -28,9 +28,13 @@ public class Game2ElectricBoogaLoo {
         return this.stringBoard = this.gameBoard.serializeBoard();
     }
 
-    public String processPlayerInput(String p_name, String str_x, String str_y, String str_col){
-        int x = Integer.parseInt(str_x);
-        int y = Integer.parseInt(str_y);
+    public String processPlayerInput(String p_name, String str_x, String str_y, String str_col, String other){
+        int x=-1;
+        int y=-1;
+        if(!str_x.equals("") && !str_y.equals("")) {
+            x = Integer.parseInt(str_x);
+            y=  Integer.parseInt(str_y);
+        }
         boolean validMove = false;
         boolean over = false;
         String returnString = "";
@@ -39,12 +43,19 @@ public class Game2ElectricBoogaLoo {
         players.add(this.red_player);
         players.add(this.white_player);
 
+        this.current_player = Player.get_player_turn(this.red_player,this.white_player);
+
+        if(other.equals("get_turn")){
+            returnString = "player_turn:" + this.current_player.getColor();
+            return returnString;
+        }
+
         if(!this.gameOver) {
             //stores the piece a user wants to move
             String pieceName = p_name;
             Piece pieceHolder = new RegularPiece("", "");
 
-            this.current_player = Player.get_player_turn(this.red_player,this.white_player);
+
 
             this.current_player.setColor(clientColor);
 
@@ -66,6 +77,7 @@ public class Game2ElectricBoogaLoo {
             }else{
                 returnString= "Success:Piece Moved!";
                 Player.flipTurn(players);
+                returnString = returnString + ",player_turn:" + this.current_player.getColor();
             }
         }else{
             returnString = "Success:Game Over";

@@ -10,8 +10,10 @@ public class Server {
     private ServerSocket server_socket = null;
     private Socket client_socket = null;
 
-    private ArrayList<ClientProcessing> players = new ArrayList<>();
+    private static ArrayList<ClientProcessing> players = new ArrayList<>();
     private ExecutorService pool = Executors.newFixedThreadPool(2);
+
+
 
     public Server(int port){
         Game2ElectricBoogaLoo thisGame = new Game2ElectricBoogaLoo();
@@ -25,9 +27,7 @@ public class Server {
                 players.add(playerThread);
                 pool.execute(playerThread);
                 //always show board last
-                //for(ClientProcessing p : players){
-                  //  p.sendBack();
-                //}
+
                 //client_socket.close();
             }
         }catch (Exception ex){

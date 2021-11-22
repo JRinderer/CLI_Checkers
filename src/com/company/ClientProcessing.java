@@ -82,12 +82,19 @@ public class ClientProcessing implements Runnable {
                     this.data_out.writeUTF(dataBack);
                 }
             } else if(client_message_type.equals("move")) {
+                System.out.println("I made it!");
                 this.color = parseClientMessage("color");
                 piece_name = parseClientMessage("piece_name");
                 x_cord = parseClientMessage("x_cord");
                 y_cord = parseClientMessage("y_cord");
-                dataBack = game.processPlayerInput(piece_name,x_cord,y_cord,this.color);
+                dataBack = game.processPlayerInput(piece_name,x_cord,y_cord,this.color,"");
                 this.data_out.writeUTF(dataBack);
+            } else if(client_message_type.equals("get_turn")){
+                dataBack = game.processPlayerInput(piece_name,x_cord,y_cord,this.color,"get_turn");
+                this.data_out.writeUTF(dataBack);
+            //} else if(client_message_type.equals("return_board")){
+              //  dataBack= game.serializeGameBoard();
+               // this.data_out.writeUTF(dataBack);
             }
         } catch (Exception ex) {
             System.out.println("Error in Run");
@@ -98,5 +105,6 @@ public class ClientProcessing implements Runnable {
             System.out.println("error");
         }
     }
+
 
 }
