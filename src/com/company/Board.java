@@ -130,7 +130,7 @@ public class Board implements Serializable {
         squares[x][y].setPiece(piece);
         piece.setY_cord(y);
         piece.setX_cord(x);
-        System.out.println(squares[x][y].getPiece().getFriendly_name());
+        //System.out.println(squares[x][y].getPiece().getFriendly_name());
     }
 
     public void removePieceOnSpace(int x, int y) {

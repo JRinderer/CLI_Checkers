@@ -58,7 +58,6 @@ public class ClientProcessing implements Runnable {
     }
 
     public void run() {
-        System.out.println("Dicks");
         String dataBack = "";
         String piece_name="";
         String x_cord = "";
@@ -82,7 +81,6 @@ public class ClientProcessing implements Runnable {
                     this.data_out.writeUTF(dataBack);
                 }
             } else if(client_message_type.equals("move")) {
-                System.out.println("I made it!");
                 this.color = parseClientMessage("color");
                 piece_name = parseClientMessage("piece_name");
                 x_cord = parseClientMessage("x_cord");
