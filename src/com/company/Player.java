@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Player implements Serializable {
     public String color;
@@ -10,9 +11,36 @@ public class Player implements Serializable {
         return turn;
     }
 
+    public static void flipTurn(ArrayList<Player> players){
+        for(Player plyr : players){
+            plyr.setTurn(!plyr.isTurn());
+        }
+    }
+
     public static void setTotalTurn(Player p1, Player p2){
         p1.setTurn(true);
         p2.setTurn(false);
+    }
+
+    public void flipTurn(Player player_not_turn){
+        this.setTurn(false);
+        player_not_turn.setTurn(true);
+    }
+
+    public static Player get_player_turn(Player p1, Player p2){
+        if(p1.isTurn()){
+            return p1;
+        }else{
+            return p2;
+        }
+    }
+
+    public static Player get_player_not_turn(Player p1, Player p2){
+        if(!p1.isTurn()){
+            return p1;
+        }else{
+            return p2;
+        }
     }
 
     public String getColor() {

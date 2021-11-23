@@ -45,6 +45,10 @@ public class Game implements Serializable {
         boolean over = false;
         //stores the piece a user wants to move
         String pieceName = "";
+        //red goes first
+        Player current_player = new Player();
+        Player next_player = Player.get_player_not_turn(this.red_player,this.white_player);
+        //white goes next
         //show the board
         this.myBoard.showBoard();
 
@@ -54,9 +58,12 @@ public class Game implements Serializable {
             Scanner myScanner = new Scanner(System.in);
             pieceName = myScanner.nextLine();
             Piece pieceHolder = new RegularPiece("", "");
-
+            //get what player is up next
+            current_player = Player.get_player_turn(this.red_player,this.white_player);
+            System.out.println("Our current player is " + current_player.getColor());
+            System.out.println("Our next player is " + next_player.getColor());
             try {
-                pieceHolder = this.myBoard.findPiece(pieceName,red_player);
+                pieceHolder = this.myBoard.findPiece(pieceName,current_player);
             } catch (Exception ex) {
                 System.out.println("Error message in finding piece");
             }
@@ -64,7 +71,7 @@ public class Game implements Serializable {
                 System.out.println("Type a piece name: ");
                 pieceName = myScanner.nextLine();
                 try {
-                    pieceHolder = this.myBoard.findPiece(pieceName,red_player);
+                    pieceHolder = this.myBoard.findPiece(pieceName,current_player);
                 } catch (Exception ex) {
                     System.out.println("That piece doesn't exist");
                 }
@@ -77,6 +84,12 @@ public class Game implements Serializable {
                 y = myScanner.nextInt();
                 myScanner.nextLine();
                 validMove = pieceHolder.Move(this.myBoard, x, y);
+                //flip to the next players turn
+                current_player.flipTurn(next_player);
+                next_player = Player.get_player_not_turn(current_player,next_player);
+                //switch the player objects
+                //next_player is the current player from our temp_holder
+
             } catch (Exception ex) {
                 System.out.println("That's invalid input");
             }

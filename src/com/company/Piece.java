@@ -6,8 +6,12 @@ public abstract class Piece implements Serializable {
     String piece_name;
     String friendly_name;
     String piece_color;
+    int forward;
+    int forward_jump;
+    int jumpY;
     int x_cord;
     int y_cord;
+    int king_row;
 
 
     public String getFriendly_name() {
@@ -54,6 +58,7 @@ public abstract class Piece implements Serializable {
         this.piece_name = piece_name;
         this.piece_color=piece_color;
     }
+
 
     public abstract boolean Move(Board b, int x, int y);
 

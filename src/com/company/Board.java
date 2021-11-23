@@ -95,6 +95,20 @@ public class Board implements Serializable {
         }
     }
 
+    public String serializeBoard() {
+        String line = "board:";
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+
+                line = line + squares[x][y].getPieceName();
+            }
+            line = line + "\n";
+        }
+        line = line + "";
+        return line;
+
+    }
 
     public ArrayList<Piece> showBoard() {
         System.out.println("======================================================");
@@ -116,7 +130,7 @@ public class Board implements Serializable {
         squares[x][y].setPiece(piece);
         piece.setY_cord(y);
         piece.setX_cord(x);
-        System.out.println(squares[x][y].getPiece().getFriendly_name());
+        //System.out.println(squares[x][y].getPiece().getFriendly_name());
     }
 
     public void removePieceOnSpace(int x, int y) {
@@ -134,10 +148,15 @@ public class Board implements Serializable {
         }
     }
 
+    public Piece getPieceByCoord(int x, int y){
+        return this.squares[x][y].getPiece();
+    }
+
     public Piece findPiece(String pieceName, Player player)throws InterruptedException{
         ArrayList<Piece> listOPieces = getPieces();
         Piece returnPiece = new RegularPiece("","");
         returnPiece = null;
+        System.out.println(player.getColor());
         for(Piece p : listOPieces){
             if(Objects.isNull(p.getFriendly_name())){
                 returnPiece = null;
