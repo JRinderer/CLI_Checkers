@@ -11,8 +11,9 @@ import java.util.Map;
 type:color_set,color:R
 or
 type:move,piece_name:some_name,x_cord:3,y_cord:y,color:R
-
+[1,2,3,4,5]
 */
+
 public class ClientProcessing implements Runnable {
 
     private Socket client;

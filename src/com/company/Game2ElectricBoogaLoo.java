@@ -55,8 +55,6 @@ public class Game2ElectricBoogaLoo {
             String pieceName = p_name;
             Piece pieceHolder = new RegularPiece("", "");
 
-
-
             this.current_player.setColor(clientColor);
 
             System.out.println(red_player.isTurn());
